@@ -1,28 +1,27 @@
 package biguid.sqlserver.utils;
 
-import biguid.sqlserver.data.passenger.Email;
-import biguid.sqlserver.data.passenger.Name;
-import biguid.sqlserver.data.passenger.Passport;
-import biguid.sqlserver.data.passenger.Phone;
-import biguid.sqlserver.data.passenger.Sex;
+import biguid.sqlserver.generator.passenger.EmailGenerator;
+import biguid.sqlserver.generator.passenger.PassportGenerator;
+import biguid.sqlserver.generator.passenger.PhoneGenerator;
+import biguid.sqlserver.generator.passenger.SexGeneartor;
 import biguid.sqlserver.model.Passenger;
 
 public class PassengerGenerator {
-	private Name surname;
-	private Name givenName;
-	private Sex sex;
-	private Passport passport;
-	private Email email;
-	private Phone phone;
 
-	public Passenger generate() {
+	private static SexGeneartor sexGenerator = new SexGeneartor();
+	private static PassportGenerator passportGenerator = new PassportGenerator();
+	private static PhoneGenerator phoneGenerartor = new PhoneGenerator();
+
+	public static Passenger create(String surname, String givenName) {
+		EmailGenerator emailGenerator = new EmailGenerator(surname, givenName);
 		Passenger passenger = new Passenger();
-		passenger.setSurname(surname.get());
-		passenger.setGivenName(givenName.get());
-		passenger.setSex(sex.get());
-		passenger.setPassport(passport.get());
-		passenger.setEmail(email.get());
-		passenger.setPhone(phone.get());
+		passenger.setEmail(emailGenerator.get());
+		passenger.setGivenName(givenName);
+		passenger.setSurname(surname);
+		passenger.setPassport(passportGenerator.get());
+		passenger.setPhone(phoneGenerartor.get());
+		passenger.setSex(sexGenerator.get());
 		return passenger;
 	}
+
 }

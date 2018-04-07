@@ -1,17 +1,37 @@
 package biguid.sqlserver.script;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.ArrayList;
+import java.util.List;
 
+import biguid.sqlserver.generator.passenger.NameGenerator;
+import biguid.sqlserver.model.Passenger;
 import biguid.sqlserver.utils.FlightDatabase;
+import biguid.sqlserver.utils.PassengerGenerator;
 
 public class GeneratePassenger {
-	private static final Logger LOGGER = LoggerFactory.getLogger(GeneratePassenger.class);
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
+		NameGenerator surnameGenerator = new NameGenerator();
+		List<Passenger> passengerList = new ArrayList<Passenger>();
 
-		FlightDatabase flightDatabase = new FlightDatabase();
-		flightDatabase.connect();
-		LOGGER.info("Transaction");
-		flightDatabase.disconnect();
+		FlightDatabase database = new FlightDatabase();
+		database.connect();
+		int size = surnameGenerator.size();
+		for (int i = 0; i < size; i++) {
+			String surname = surnameGenerator.get();
+			NameGenerator givenNameGenerator = new NameGenerator();
+			for (int j = 0; j < size; j++) {
+				String givenName = givenNameGenerator.get();
+				if (surname.equals(givenName)) {
+					continue;
+				}
+				Passenger passenger = PassengerGenerator.create(surname, givenName);
+				passengerList.add(passenger);
+				int count = database.insertPassenger(passenger);
+				if (count <= 0) {
+					throw new Exception();
+				}
+			}
+		}
+		database.disconnect();
 	}
 }
