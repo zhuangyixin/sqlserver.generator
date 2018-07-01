@@ -1,21 +1,17 @@
-package biguid.sqlserver.utils;
+package biguid.sqlserver.generator.passenger;
 
-import biguid.sqlserver.generator.passenger.EmailGenerator;
-import biguid.sqlserver.generator.passenger.PassportGenerator;
-import biguid.sqlserver.generator.passenger.PhoneGenerator;
-import biguid.sqlserver.generator.passenger.SexGeneartor;
 import biguid.sqlserver.model.Passenger;
 
-public class PassengerGenerator {
+public class PassengerCreator {
 
 	private static SexGeneartor sexGenerator = new SexGeneartor();
 	private static PassportGenerator passportGenerator = new PassportGenerator();
 	private static PhoneGenerator phoneGenerartor = new PhoneGenerator();
+	private static EmailGenerator emailGenerator = new EmailGenerator();
 
 	public static Passenger create(String surname, String givenName) {
-		EmailGenerator emailGenerator = new EmailGenerator(surname, givenName);
 		Passenger passenger = new Passenger();
-		passenger.setEmail(emailGenerator.get());
+		passenger.setEmail(emailGenerator.getEmail(surname, givenName));
 		passenger.setGivenName(givenName);
 		passenger.setSurname(surname);
 		passenger.setPassport(passportGenerator.get());

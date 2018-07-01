@@ -3,10 +3,10 @@ package biguid.sqlserver.script;
 import java.util.ArrayList;
 import java.util.List;
 
+import biguid.sqlserver.database.FlightDatabase;
 import biguid.sqlserver.generator.passenger.NameGenerator;
+import biguid.sqlserver.generator.passenger.PassengerCreator;
 import biguid.sqlserver.model.Passenger;
-import biguid.sqlserver.utils.FlightDatabase;
-import biguid.sqlserver.utils.PassengerGenerator;
 
 public class GeneratePassenger {
 	public static void main(String[] args) throws Exception {
@@ -24,7 +24,7 @@ public class GeneratePassenger {
 				if (surname.equals(givenName)) {
 					continue;
 				}
-				Passenger passenger = PassengerGenerator.create(surname, givenName);
+				Passenger passenger = PassengerCreator.create(surname, givenName);
 				passengerList.add(passenger);
 				int count = database.insertPassenger(passenger);
 				if (count <= 0) {

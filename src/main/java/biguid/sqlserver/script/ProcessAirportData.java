@@ -6,15 +6,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.sound.sampled.Line;
-import javax.swing.ListModel;
-
 import com.google.gson.GsonBuilder;
-import com.google.gson.annotations.JsonAdapter;
 
 public class ProcessAirportData {
 	public static void main(String[] args) {
@@ -31,7 +26,7 @@ public class ProcessAirportData {
 				}
 				String airport = line.substring(begin + 1, end);
 				lines.add(airport);
-				
+
 			}
 			reader.close();
 			File file1 = new File("E:\\Workspace\\Java\\sqlserver.generator\\src\\resources\\Airport.json");
@@ -45,6 +40,6 @@ public class ProcessAirportData {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 }
